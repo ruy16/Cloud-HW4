@@ -1,0 +1,27 @@
+Kubernetes Cluster => Master->Nodes->Pods{ Volumes and Containers}
+
+Kubectl commands:
+	kubectl get - list resources
+	kubectl describe - show detailed information about a resource
+	kubectl logs - print the logs from a container in a pod
+	kubectl exec - execute a command on a container in a pod
+	kubectl logs $POD_NAME( To check output of the application)
+	curl (Request run)+ URL( the route to the API of the pod)
+	http://localhost:8001/api/v1/namespaces/default/pods/$POD_NAME/proxy/
+	kubectl exec -ti $POD_NAME bash( open a bash in the pod's con tainer)
+Scale:
+	kubectl scale {deployment name} --replicas=4
+
+Update(By setting to a different image):
+	kubectl set image {name of deployment} {name of deployment=url to the image 	registry}:version tag
+Rollback:
+	kubectl rollout undo {deployment name}
+
+Verify process (Going to the pods):
+	Find the exposed ID and Port:
+		kubectl describe services/kubernetes-bootcamp
+	Create an environment var that has the value of the port
+		export NODE_PORT=$(kubectl get services/kubernetes-bootcamp -o go-template='{{(index 		.spec.ports 0).nodePort}}')
+		echo NODE_PORT=$NODE_PORT
+	Curl to the exposed IP and Port:
+		curl $(minikube ip):$NODE_PORT
