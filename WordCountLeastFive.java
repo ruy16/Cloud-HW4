@@ -111,7 +111,9 @@ public static long starttime;
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(IntWritable.class);
     FileInputFormat.addInputPath(job, new Path(args[0]));
-    FileOutputFormat.setOutputPath(job, new Path(args[1]));
+    FileInputFormat.addInputPath(job, new Path(args[1]));
+    FileInputFormat.addInputPath(job, new Path(args[2]));
+    FileOutputFormat.setOutputPath(job, new Path(args[3]));
     if (job.waitForCompletion(true)){
     	System.out.print("\nExecution time: "+(System.currentTimeMillis()-starttime) +"ms\n");
     	System.exit(0);
